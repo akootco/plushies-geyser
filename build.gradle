@@ -1,0 +1,31 @@
+plugins {
+    id("org.jetbrains.kotlin.jvm") version "1.9.23"
+}
+
+group = project.property('group')
+version = project.property('version')
+
+repositories {
+    maven {
+        url = uri("https://repo.opencollab.dev/main/")
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.typesafe:config:1.4.2'
+    compileOnly("org.geysermc.geyser:api:2.6.0-SNAPSHOT")
+}
+
+processResources {
+    def props = [group: project.property('group'), name: project.property('modulename'), version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('extension.yml') {
+        expand props
+    }
+}
+
+kotlin {
+    jvmToolchain(21)
+}
