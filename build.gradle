@@ -1,7 +1,3 @@
-plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.23"
-}
-
 group = project.property('group')
 version = project.property('version')
 
@@ -13,7 +9,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.typesafe:config:1.4.2'
+    compileOnly project(":plushies")
+    compileOnly project(":bluefox")
     compileOnly("org.geysermc.geyser:api:2.6.0-SNAPSHOT")
 }
 
@@ -26,6 +23,8 @@ processResources {
     }
 }
 
-kotlin {
-    jvmToolchain(21)
+shadowJar {
+    destinationDirectory = file('../test/server/plugins/Geyser-Spigot/extensions')
+    archiveBaseName.set(project.property('modulename') as String)
+    archiveClassifier.set('')
 }
