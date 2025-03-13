@@ -12,10 +12,12 @@ class PlushiesGeyser : Extension {
     fun registerItems(event: GeyserItemsEvent) {
         Plushies.plushies(event)
         Plushies.books(event)
+        Edulis.items(event)
     }
 
     @Subscribe
     fun registerHeads(event: GeyserHeadEvent) {
         Plushies.heads(event)
+        Edulis.heads(event)
     }
 }
