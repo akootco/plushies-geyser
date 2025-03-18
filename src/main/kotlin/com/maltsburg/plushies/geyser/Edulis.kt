@@ -1,22 +1,26 @@
 package com.maltsburg.plushies.geyser
 
-import co.akoot.plugins.edulis.Edulis.Companion.cakeConfig
 import co.akoot.plugins.edulis.Edulis.Companion.headConfig
-import co.akoot.plugins.edulis.Edulis.Companion.itemConfig
+import co.akoot.plugins.edulis.util.CreateItem.resolvedResults
 import com.maltsburg.plushies.geyser.util.Helpers.itemData
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent
 
 object Edulis {
 
     fun items(event: GeyserItemsEvent) {
-        val configs = listOf(itemConfig, cakeConfig)
+        // custom model data has to be set in order or everything breaks
+        // this is such a caveman moment for minecraft fr fr, group by material here.
 
-        for (config in configs) {
-            for (key in config.getKeys().sortedBy { config.getInt(it) }) {
-                val item = config.getString("$key.material")?.lowercase() ?: continue
-                val cmd = config.getInt("$key.customModelData").takeIf { it != 0 } ?: continue
+        // literally going to rage quit, this took like 2 hours. maybe i am the caveman
+        for ((material, keys) in resolvedResults.entries.groupBy { it.value.type }) {
+            // now sort by custom model data
+            val sortedItems = keys.filter { it.value.itemMeta.hasCustomModelData() }
+                .sortedBy { it.value.itemMeta.customModelData }
 
-                event.register("minecraft:$item", itemData(key, cmd))
+            // register that jawn
+            for (key in sortedItems) {
+                val cmd = key.value.itemMeta.customModelData
+                event.register("minecraft:${material.name.lowercase()}", itemData(key.key, cmd))
             }
         }
     }
