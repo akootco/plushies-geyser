@@ -2,21 +2,18 @@ group = project.property('group')
 version = project.property('version')
 
 repositories {
-    maven {
-        url = uri("https://repo.opencollab.dev/main/")
-    }
-    mavenCentral()
+    maven { url = uri("https://repo.opencollab.dev/main/") }
 }
 
 dependencies {
+    compileOnly("org.geysermc.geyser:api:${geyser_api}-SNAPSHOT")
     compileOnly project(":bluefox")
     compileOnly project(":plushies")
     compileOnly project(":edulis")
-    compileOnly("org.geysermc.geyser:api:2.6.0-SNAPSHOT")
 }
 
 processResources {
-    def props = [group: project.property('group'), name: project.property('modulename'), version: version]
+    def props = [group: project.property('group'), name: project.property('modulename'), version: project.property('version'), geyser_api: project.property('geyser_api')]
     inputs.properties props
     filteringCharset 'UTF-8'
     filesMatching('extension.yml') {

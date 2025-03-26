@@ -2,5 +2,5 @@ id: plushies-geyser
 name: '${name}'
 version: '${version}'
 main: '${group}.${name}'
-api: 2.6.0
+api: '${geyser_api}'
 author: IndiaPaleAle

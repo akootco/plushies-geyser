@@ -2,7 +2,7 @@ package com.maltsburg.plushies.geyser
 
 import co.akoot.plugins.plushies.Plushies.Companion.headConf
 import co.akoot.plugins.plushies.util.Plush
-import com.maltsburg.plushies.geyser.util.Helpers.itemData
+import com.maltsburg.plushies.geyser.util.Helpers.register
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent
 
 object Plushies {
@@ -11,16 +11,14 @@ object Plushies {
         val plushies = Plush.plushies
 
         for (key in plushies.sortedBy { it.second }) {
-            event.apply {
-                register("minecraft:totem_of_undying", itemData(key.first, key.second))
-                register("minecraft:totem_of_undying", itemData("${key.first}.st", key.second + 1))
-            }
+            register(event, key.first, key.second, "totem_of_undying")
+            register(event, "${key.first}.st", key.second + 1, "totem_of_undying")
         }
     }
 
     fun books(event: GeyserItemsEvent) {
         (1..72).forEach { cmd ->
-            event.register("minecraft:written_book", itemData("book.$cmd", cmd))
+            register(event, "book.$cmd", cmd, "written_book")
         }
     }
 

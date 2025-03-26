@@ -1,8 +1,8 @@
 package com.maltsburg.plushies.geyser
 
 import co.akoot.plugins.edulis.Edulis.Companion.headConfig
-import co.akoot.plugins.edulis.util.CreateItem.resolvedResults
-import com.maltsburg.plushies.geyser.util.Helpers.itemData
+import co.akoot.plugins.edulis.util.Materials.resolvedResults
+import com.maltsburg.plushies.geyser.util.Helpers.register
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent
 
 object Edulis {
@@ -20,7 +20,7 @@ object Edulis {
             // register that jawn
             for (key in sortedItems) {
                 val cmd = key.value.itemMeta.customModelData
-                event.register("minecraft:${material.name.lowercase()}", itemData(key.key, cmd))
+                register(event, key.key, cmd, material.name.lowercase())
             }
         }
     }
