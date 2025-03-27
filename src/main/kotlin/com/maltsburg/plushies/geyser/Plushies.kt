@@ -1,14 +1,14 @@
 package com.maltsburg.plushies.geyser
 
 import co.akoot.plugins.plushies.Plushies.Companion.headConf
-import co.akoot.plugins.plushies.util.Plush
+import co.akoot.plugins.plushies.util.Items
 import com.maltsburg.plushies.geyser.util.Helpers.register
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent
 
 object Plushies {
 
     fun plushies(event: GeyserItemsEvent) {
-        val plushies = Plush.plushies
+        val plushies = Items.plushies
 
         for (key in plushies.sortedBy { it.second }) {
             register(event, key.first, key.second, "totem_of_undying")
